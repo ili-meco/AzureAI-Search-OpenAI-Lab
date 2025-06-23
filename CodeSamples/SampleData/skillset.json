@@ -1,0 +1,140 @@
+{
+  "name": "azure-ai-search-lab-skillset",
+  "description": "Skillset for processing documents in the Azure AI Search Lab",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
+      "name": "entity-recognition",
+      "description": "Extracts entities from the document content",
+      "context": "/document",
+      "categories": [
+        "Person",
+        "Organization",
+        "Location"
+      ],
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        },
+        {
+          "name": "languageCode",
+          "source": "en"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "persons",
+          "targetName": "persons"
+        },
+        {
+          "name": "organizations",
+          "targetName": "organizations"
+        },
+        {
+          "name": "locations",
+          "targetName": "locations"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+      "name": "key-phrase-extraction",
+      "description": "Extracts key phrases from the document content",
+      "context": "/document",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        },
+        {
+          "name": "languageCode",
+          "source": "en"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "keyPhrases",
+          "targetName": "keyPhrases"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+      "name": "text-splitter",
+      "description": "Splits text into chunks for more efficient processing",
+      "context": "/document",
+      "textSplitMode": "pages",
+      "maximumPageLength": 5000,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        },
+        {
+          "name": "languageCode",
+          "source": "en"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "textItems",
+          "targetName": "pages"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+      "name": "sentiment-analysis",
+      "description": "Analyzes sentiment of the document content",
+      "context": "/document",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        },
+        {
+          "name": "languageCode",
+          "source": "en"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "score",
+          "targetName": "sentimentScore"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+      "name": "vector-embedding-generation",
+      "description": "Generates vector embeddings for text using an Azure OpenAI endpoint",
+      "context": "/document",
+      "uri": "https://{your-openai-resource-name}.openai.azure.com/openai/deployments/{deployment-name}/embeddings?api-version=2022-12-01",
+      "httpMethod": "POST",
+      "timeout": "PT30S",
+      "batchSize": 1,
+      "degreeOfParallelism": 1,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "targetName": "vectorEmbedding"
+        }
+      ],
+      "httpHeaders": {
+        "api-key": "{your-openai-api-key}"
+      }
+    }
+  ],
+  "cognitiveServices": {
+    "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+    "description": "Cognitive Services resource for the skillset",
+    "key": "{your-cognitive-services-key}"
+  }
+}

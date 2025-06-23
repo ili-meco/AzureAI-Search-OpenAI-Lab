@@ -1,0 +1,55 @@
+name: rag_with_azure_search
+description: A prompt flow that implements RAG pattern using Azure AI Search and Azure OpenAI
+inputs:
+  user_query:
+    type: string
+    description: The user's question or query
+  chat_history:
+    type: list
+    description: List of previous chat messages in the conversation
+    default: []
+outputs:
+  response:
+    type: string
+    description: AI-generated response based on retrieved documents
+    reference: ${generate_response.output}
+
+nodes:
+- name: extract_search_query
+  type: python
+  source:
+    type: code
+    path: extract_search_query.py
+  inputs:
+    user_query: ${inputs.user_query}
+    chat_history: ${inputs.chat_history}
+  use_variant: default
+
+- name: vector_search
+  type: python
+  source:
+    type: code
+    path: vector_search.py
+  inputs:
+    search_query: ${extract_search_query.output}
+  use_variant: default
+
+- name: generate_response
+  type: python
+  source:
+    type: code
+    path: generate_response.py
+  inputs:
+    user_query: ${inputs.user_query}
+    retrieved_documents: ${vector_search.output}
+    chat_history: ${inputs.chat_history}
+  use_variant: default
+
+environment_variables:
+  AZURE_SEARCH_ENDPOINT: 
+  AZURE_SEARCH_KEY: 
+  AZURE_SEARCH_INDEX: azure-ai-search-lab-index
+  AZURE_OPENAI_ENDPOINT: 
+  AZURE_OPENAI_API_KEY: 
+  EMBEDDING_MODEL_DEPLOYMENT: text-embedding-ada-002
+  GPT_MODEL_DEPLOYMENT: gpt-4

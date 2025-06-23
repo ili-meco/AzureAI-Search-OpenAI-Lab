@@ -1,0 +1,82 @@
+[
+  {
+    "id": "doc1",
+    "title": "Azure AI Search Overview",
+    "content": "Azure AI Search (formerly Azure Cognitive Search) is a cloud search service that gives developers APIs and tools for building rich search experiences over private, heterogeneous content in web, mobile, and enterprise applications. Your code or a tool invokes data ingestion (indexing) to create and load an index. Optionally, you can add cognitive skills to apply AI processes during indexing. Doing so can add new information and structures useful for search and other scenarios.",
+    "category": "Azure Services",
+    "lastUpdated": "2023-09-15T10:30:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc2",
+    "title": "Vector Search Capabilities",
+    "content": "Vector search is a machine learning technique used to find semantically similar items by comparing their vector embeddings. In Azure AI Search, there are several ways to create and use vector data: Azure OpenAI Service (embeddings API), bring your own models, or cognitive skills in an AI enrichment pipeline. Vector search works with vector embeddings in Euclidean space. Azure AI Search supports multiple vector embedding fields with different vector configurations.",
+    "category": "Search Techniques",
+    "lastUpdated": "2023-10-01T14:45:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc3",
+    "title": "Semantic Search vs. Vector Search",
+    "content": "Semantic search and vector search are similar in that both help you discover content based on intent and meaning, but they work differently. Semantic search helps traditional keyword search by reranking and highlighting search results, while vector search matches a query's embedding against embeddings of the content you're searching. Vector search is typically used for scenarios like image similarity, whereas semantic search is typically used with text.",
+    "category": "Search Techniques",
+    "lastUpdated": "2023-10-12T09:15:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc4",
+    "title": "Hybrid Search Implementation",
+    "content": "A hybrid search combines keyword search with vector search to create a more comprehensive search experience. In Azure AI Search, this is implemented by using both keyword and vector search capabilities simultaneously. The search results from both approaches can be combined and ranked using custom scoring profiles. Hybrid search is particularly effective when dealing with complex search scenarios that require both exact matches and semantic understanding.",
+    "category": "Search Techniques",
+    "lastUpdated": "2023-11-05T11:20:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc5",
+    "title": "Azure Landing Zone for AI Workloads",
+    "content": "An Azure landing zone for AI workloads is a modular architecture that provides a scalable, secure foundation for deploying AI applications. The landing zone includes networking, identity, governance, and security components that ensure your AI services operate within organizational guidelines and compliance requirements. For Azure AI Search and OpenAI services, the landing zone helps establish private endpoints, network isolation, and proper RBAC to protect sensitive data and models.",
+    "category": "Architecture",
+    "lastUpdated": "2023-11-18T16:40:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc6",
+    "title": "Creating Search Indexes",
+    "content": "A search index is the persistent storage of documents and other constructs used for filtered, full-text, and fuzzy search in Azure AI Search. An index contains searchable data that you upload as JSON documents, plus configurations like scoring profiles, analyzers, suggesters, and other attributes that define search behaviors. To create an index, you can use the Azure portal, REST API, or SDKs for .NET, Python, Java, or JavaScript.",
+    "category": "Azure Services",
+    "lastUpdated": "2023-12-01T08:50:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc7",
+    "title": "Working with Indexers",
+    "content": "An indexer in Azure AI Search is a crawler that extracts searchable data and metadata from an external Azure data source and populates an index based on field-to-field mappings between the index and your data source. This approach is sometimes called a 'pull model' because the service pulls data in without you having to write code that adds data to an index. Indexers can be scheduled to run periodically to keep your indexes in sync with the source data.",
+    "category": "Azure Services",
+    "lastUpdated": "2023-12-15T13:10:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc8",
+    "title": "Azure AI Foundry Integration",
+    "content": "Azure AI Foundry enables you to create and deploy AI prompt flows that can be integrated with Azure AI Search. With prompt flows, you can create complex multi-step AI workflows that incorporate retrieval augmented generation (RAG) patterns, using Azure AI Search for the retrieval component. The prompt flow endpoints can be consumed by applications to provide search-grounded AI responses that are more accurate and relevant to the specific context of your data.",
+    "category": "AI Integration",
+    "lastUpdated": "2024-01-05T09:30:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc9",
+    "title": "Security Best Practices for Azure AI Search",
+    "content": "Securing Azure AI Search involves multiple layers of protection: network security with private endpoints and VNETs, authentication using Azure AD, authorization with RBAC, data encryption at rest and in transit, and logging/monitoring with Azure Monitor. For sensitive workloads, consider implementing a dedicated landing zone with proper network segmentation, enforce encryption of all data, establish a proper identity management system, and regularly audit access logs to detect unauthorized access attempts.",
+    "category": "Security",
+    "lastUpdated": "2024-01-20T15:25:00Z",
+    "vectorEmbedding": []
+  },
+  {
+    "id": "doc10",
+    "title": "Building RAG Applications",
+    "content": "Retrieval Augmented Generation (RAG) is a pattern that combines the knowledge retrieval capabilities of search engines with the generation capabilities of large language models. In a typical implementation with Azure AI Search, a user query is processed to retrieve relevant documents from the search index, which are then provided as context to an Azure OpenAI model. This approach helps ground the model's responses in factual information from your data, reducing hallucinations and providing more accurate, contextual responses.",
+    "category": "AI Integration",
+    "lastUpdated": "2024-02-10T10:05:00Z",
+    "vectorEmbedding": []
+  }
+]

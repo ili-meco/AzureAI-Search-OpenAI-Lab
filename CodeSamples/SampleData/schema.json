@@ -1,0 +1,128 @@
+{
+  "name": "azure-ai-search-lab-index",
+  "fields": [
+    {
+      "name": "id",
+      "type": "Edm.String",
+      "key": true,
+      "searchable": false,
+      "filterable": true,
+      "facetable": false,
+      "sortable": true
+    },
+    {
+      "name": "title",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "facetable": false,
+      "sortable": true
+    },
+    {
+      "name": "content",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": false,
+      "facetable": false,
+      "sortable": false
+    },
+    {
+      "name": "category",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "facetable": true,
+      "sortable": true
+    },
+    {
+      "name": "lastUpdated",
+      "type": "Edm.DateTimeOffset",
+      "searchable": false,
+      "filterable": true,
+      "facetable": false,
+      "sortable": true
+    },
+    {
+      "name": "vectorEmbedding",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "filterable": false,
+      "facetable": false,
+      "sortable": false,
+      "vectorSearch": {
+        "dimensions": 1536,
+        "vectorSearchConfiguration": "default"
+      }
+    }
+  ],
+  "vectorSearch": {
+    "algorithms": {
+      "hnsw": {
+        "parameters": {
+          "m": 4,
+          "efConstruction": 400,
+          "efSearch": 500,
+          "metric": "cosine"
+        }
+      }
+    },
+    "profiles": {
+      "default": {
+        "algorithm": "hnsw"
+      }
+    }
+  },
+  "semantic": {
+    "configurations": [
+      {
+        "name": "semantic-config",
+        "prioritizedFields": {
+          "titleField": {
+            "fieldName": "title"
+          },
+          "contentFields": [
+            {
+              "fieldName": "content"
+            }
+          ],
+          "keywordsFields": [
+            {
+              "fieldName": "category"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "scoringProfiles": [
+    {
+      "name": "relevanceScoring",
+      "text": {
+        "weights": {
+          "title": 5,
+          "content": 3,
+          "category": 2
+        }
+      }
+    }
+  ],
+  "defaultScoringProfile": "relevanceScoring",
+  "suggesters": [
+    {
+      "name": "title-suggester",
+      "searchMode": "analyzingInfixMatching",
+      "sourceFields": ["title"]
+    }
+  ],
+  "analyzers": [
+    {
+      "name": "custom-analyzer",
+      "@odata.type": "#Microsoft.Azure.Search.CustomAnalyzer",
+      "tokenizer": "microsoft_language_tokenizer",
+      "tokenFilters": ["lowercase", "asciifolding"]
+    }
+  ],
+  "cors": {
+    "allowedOrigins": ["*"]
+  }
+}
