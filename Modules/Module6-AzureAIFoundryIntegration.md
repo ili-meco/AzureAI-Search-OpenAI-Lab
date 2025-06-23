@@ -2,46 +2,46 @@
 
 ## Introduction
 
-Azure AI Foundry (formerly Azure Machine Learning Studio) provides a comprehensive platform for building, deploying, and managing AI solutions at scale. When integrated with Azure AI Search, it enables powerful workflows for creating and deploying search-enhanced AI applications.
+Azure AI Foundry provides a comprehensive platform for building, deploying, and managing AI solutions at scale. When integrated with Azure AI Search, it enables powerful workflows for creating and deploying search-enhanced AI applications.
 
-In this module, you'll learn how to use Azure AI Foundry to build prompt flows that leverage Azure AI Search for grounding and deploy them to production endpoints.
+In this module, you'll learn how to use Azure AI Foundry to build RAG patterns that leverage Azure AI Search for grounding and deploy them to production endpoints.
 
 ## Learning Objectives
 
 By the end of this module, you will be able to:
 
 - Create and configure an Azure AI Foundry project
-- Design prompt flows that integrate with Azure AI Search
-- Deploy prompt flows to managed online endpoints
-- Integrate prompt flows with web applications
+- Design RAG patterns that integrate with Azure AI Search
+- Deploy AI assistants to managed online endpoints
+- Integrate AI endpoints with web applications
 
 ## Understanding Azure AI Foundry
 
 Azure AI Foundry is a unified platform for AI development that includes:
 
 1. **Project Management**: Organize AI assets and resources
-2. **Prompt Flow**: Visual tool for building AI workflows with LLMs
-3. **Model Catalog**: Repository of AI models
+2. **AI Assistants**: Create conversational AI applications with RAG capabilities
+3. **Model Catalog**: Repository of AI models and hub models
 4. **Deployment Options**: Multiple ways to deploy AI solutions
 
 ### Key Components for Search Integration
 
 - **Connections**: Configure access to Azure OpenAI and Azure AI Search
-- **Prompt Flow Tools**: Reusable components for search, LLM integration, etc.
-- **Deployment Endpoints**: Host your flows for production use
+- **Assistants**: Create intelligent assistants with RAG capabilities 
+- **Deployment Endpoints**: Host your assistants for production use
 
 ## Step 1: Setting Up Azure AI Foundry
 
 ### Task: Create Azure AI Foundry Resources
 
-1. In the Azure portal, create an Azure AI Foundry resource:
+1. In the Azure portal, create an Azure AI resource:
    - **Resource group**: Use `ai-search-lab-rg` (same as previous modules)
    - **Name**: `ai-foundry-<your-initials>`
-   - **Region**: Select a region that supports Azure AI Foundry (e.g., East US)
+   - **Region**: Select a region that supports Azure AI (e.g., East US)
 
 2. Set up network isolation for production environments:
 
-   a. In your AI Foundry resource, navigate to **Networking**
+   a. In your Azure AI resource, navigate to **Networking**
    
    b. Select **Private access**
    
@@ -50,33 +50,33 @@ Azure AI Foundry is a unified platform for AI development that includes:
    d. Set up DNS configuration as required by your landing zone architecture
 
 3. Launch the Azure AI Foundry portal:
-   - Click **Launch studio** to open the AI Foundry portal
-   - You'll be redirected to [https://ml.azure.com](https://ml.azure.com)
+   - Click **Launch studio** to open the AI Foundry interface
+   - You'll be redirected to [https://ai.azure.com](https://ai.azure.com)
 
 ## Step 2: Creating a Project and Configuring Connections
 
 ### Task: Create a Project and Add Connections
 
 1. In the AI Foundry portal, create a new project:
-   - Click **+ Create new** > **Project**
+   - Click **+ New project**
    - Name: `search-enhanced-chat`
    - Description: `RAG-based chat using Azure AI Search`
    - Resource group: Select the resource group you've been using
    - Click **Create**
 
 2. Add a connection to Azure OpenAI:
-   - Navigate to **Settings > Connections**
+   - Navigate to **Project settings > Connections**
    - Click **+ Create**
    - Select **Azure OpenAI**
    - Name: `aoai-connection`
    - Azure subscription: Select your subscription
    - Azure OpenAI resource: Select your Azure OpenAI resource
    - Click **Next**
-   - Select your API version (e.g., "2023-07-01-preview")
+   - Select your API version (e.g., "2023-05-15")
    - Click **Create**
 
 3. Add a connection to Azure AI Search:
-   - Navigate to **Settings > Connections**
+   - Navigate to **Project settings > Connections**
    - Click **+ Create**
    - Select **Azure AI Search**
    - Name: `search-connection`
@@ -86,49 +86,35 @@ Azure AI Foundry is a unified platform for AI development that includes:
    - Select authentication type (API Key or Microsoft Entra ID)
    - Click **Create**
 
-## Step 3: Building a Search-Enhanced Prompt Flow
+## Step 3: Building a Search-Enhanced AI Assistant
 
-### Task: Create a Chat with Your Data Prompt Flow
+### Task: Create an AI Assistant with RAG
 
-1. In your project, navigate to **Prompt flow** in the left navigation
+1. In your project, navigate to **AI Assistants** in the left navigation
 
-2. Click **+ Create** to create a new flow
+2. Click **+ Create** to create a new assistant
 
-3. Under "Explore gallery", find "Chat with your data" and click **Clone**
+3. Choose **Custom Assistant** and click **Next**
 
-4. Set the name to `search-enhanced-chat` and click **Clone**
+4. Configure the basic settings:
+   - **Name**: `search-enhanced-chat`
+   - **Description**: `RAG-based chat using Azure AI Search`
+   - **Instructions**: Provide clear instructions for how the assistant should behave
 
-5. Once the flow opens, examine its structure:
-   - Input node: Accepts user query
-   - LLM nodes: Processes queries and generates responses
-   - Search nodes: Retrieves relevant information from Azure AI Search
+5. Select your Azure OpenAI model:
+   - Choose a model like GPT-4o, GPT-4, or GPT-3.5 Turbo
+   - Configure settings like temperature and max tokens
 
-6. Configure the connections for each node:
+6. Under **Add data**, click **+ Add data source**
+   - Select **Azure AI Search**
+   - Connect your search service using the connection you created
+   - Select your index
+   - Configure the search parameters:
+     - **Search type**: Hybrid (or vector if using vector search)
+     - **Content field**: Field containing the document content (e.g., "content")
+     - **Top K**: Number of results to return (e.g., 3-5)
 
-   a. Select the search node (labeled `retrieve` or similar)
-   
-   b. Under **Connection**, select your `search-connection`
-   
-   c. Configure the search parameters:
-      - **Search service**: Your search service name
-      - **Index name**: The index you created in previous modules
-      - **Search type**: Hybrid (or vector if using vector search)
-      - **Content field**: Field containing the document content (e.g., "content")
-      - **Top K**: Number of results to return (e.g., 3-5)
-   
-   d. Select the LLM node (labeled `generate_answer` or similar)
-   
-   e. Under **Connection**, select your `aoai-connection`
-   
-   f. Configure the LLM parameters:
-      - **Deployment**: Your GPT model deployment name
-      - **API version**: Your API version
-      - **Temperature**: 0.1-0.3 for factual responses
-      - **Max tokens**: 1000 (or appropriate for your needs)
-
-7. Customize the system prompt:
-   - Find the node that defines the system prompt
-   - Update it to better suit your use case, for example:
+7. Customize the system instructions for RAG:
 
 ```
 You are a helpful AI assistant that uses a search system to find relevant information.
@@ -137,96 +123,73 @@ If the search results don't contain enough information to answer the question fu
 Always cite your sources using [doc1], [doc2], etc. at the end of the relevant sentences.
 ```
 
-8. Test the flow:
-   - Click **Test** in the toolbar
+8. Test the assistant:
+   - Click **Test** in the preview panel
    - Enter a sample query relevant to your data
-   - Observe how the system retrieves information and generates a response
+   - Observe how the assistant retrieves information and generates a response
    - Adjust the configuration as needed to improve results
 
-## Step 4: Enhancing the Prompt Flow
+## Step 4: Enhancing the AI Assistant
 
-### Task: Add Advanced Features to the Flow
+### Task: Configure Advanced RAG Features
 
 1. Add query reformulation to improve search results:
-   - Add a new LLM node before the search node
-   - Configure it to reformulate the user's query for better search results
-   - Connect it between the input and search nodes
-   - Sample prompt:
+   - Go to the assistant settings
+   - Under the search configuration, enable query reformulation
+   - This helps the assistant create better search queries from user questions
+   - Test with complex queries to see the improvement
 
-```
-Given the following user question, reformulate it into a search query that will retrieve the most relevant information from a search engine.
-Make the query specific and include key terms from the original question.
-Original question: {{user_query}}
-Reformulated search query:
-```
+2. Add post-processing for answers:
+   - In the assistant settings, enable answer refinement
+   - This helps format responses and ensures proper citations
+   - Test with queries that require information from multiple documents
 
-2. Add post-processing to improve answer quality:
-   - Add an additional LLM node after the answer generation
-   - Configure it to improve the answer formatting and clarity
-   - Sample prompt:
+3. Test the enhanced assistant with the same queries as before and observe improvements
 
-```
-The following is an AI-generated answer with citations.
-Please improve this answer by:
-1. Ensuring all information is factual and based on the search results
-2. Making sure citations are properly formatted as [docN]
-3. Removing any redundant information
-4. Making the answer more concise and clear
+## Step 5: Deploying the Assistant to a Production Environment
 
-Original answer:
-{{generated_answer}}
+### Task: Deploy the Assistant to Production
 
-Improved answer:
-```
+1. In your assistant configuration, click the **Deploy** button
 
-3. Test the enhanced flow with the same queries as before and observe improvements
+2. Choose **Create deployment**:
+   - **Name**: `search-enhanced-chat-deployment`
+   - **Description**: Add a detailed description
+   - Select appropriate compute resources based on expected traffic
+   - Click **Create**
 
-## Step 5: Deploying the Prompt Flow to a Managed Endpoint
+3. Wait for the deployment to complete (this may take a few minutes)
 
-### Task: Deploy the Flow to a Managed Online Endpoint
+4. Find your deployment endpoint details:
+   - Go to **Deployments** in the left navigation
+   - Select your deployment
+   - Note the endpoint URL and authentication requirements
 
-1. In your prompt flow, click the **Deploy** button in the toolbar
-
-2. Choose **Create endpoint**:
-   - **Name**: `search-enhanced-chat-endpoint`
-   - **Virtual machine**: Select an appropriate VM size (e.g., Standard_D2s_v3)
-   - **Instance count**: 2 (for production reliability)
-   - Click **Next**
-
-3. Under **Output & connections**, ensure all connections are properly configured:
-   - Verify that Azure OpenAI and Azure AI Search connections are selected
-   - Click **Next**
-
-4. Review the deployment settings and click **Deploy**
-
-5. Wait for the deployment to complete (this may take 10-15 minutes)
-
-6. Test the endpoint:
-   - Once deployed, navigate to **Endpoints** in the left navigation
-   - Select your endpoint
-   - Go to the **Test** tab
-   - Enter a sample query and observe the response
+5. Test the deployed assistant:
+   - Use the testing interface provided
+   - Or use the API directly with appropriate authentication
 
 ## Step 6: Integrating with Web Applications
 
-### Task: Create a Simple Web App that Uses the Deployed Endpoint
+### Task: Create a Simple Web App that Uses the Deployed Assistant
 
-For production environments, you'd typically integrate your prompt flow endpoint with a web application. Here's a sample Flask application that demonstrates this integration:
+For production environments, you'd typically integrate your assistant with a web application. Here's a sample Python application that demonstrates this integration:
 
 ```python
-from flask import Flask, request, jsonify, render_template
 import requests
 import os
 from azure.identity import DefaultAzureCredential
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-# Configuration
-endpoint_url = "https://yourendpoint.inference.ml.azure.com/score"  # Replace with your endpoint URL
+# Configuration - replace with your actual values
+endpoint_url = "https://your-deployment-endpoint.azurewebsites.net"
+api_version = "2023-12-01-preview"
 
 # Use managed identity for authentication in production
 credential = DefaultAzureCredential()
-token = credential.get_token("https://ml.azure.com/.default")
+token = credential.get_token("https://cognitiveservices.azure.com/.default")
 
 @app.route('/')
 def index():
@@ -235,22 +198,25 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_query = request.json.get('query', '')
+    conversation_history = request.json.get('history', [])
+    
     if not user_query:
         return jsonify({"error": "No query provided"}), 400
     
-    # Prepare the request for the prompt flow endpoint
+    # Prepare the request for the assistant endpoint
     headers = {
         "Authorization": f"Bearer {token.token}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "api-version": api_version
     }
     
     payload = {
-        "query": user_query
+        "messages": conversation_history + [{"role": "user", "content": user_query}]
     }
     
-    # Call the prompt flow endpoint
+    # Call the assistant endpoint
     try:
-        response = requests.post(endpoint_url, headers=headers, json=payload)
+        response = requests.post(f"{endpoint_url}/chat/completions", headers=headers, json=payload)
         response.raise_for_status()
         result = response.json()
         return jsonify(result)
@@ -312,17 +278,17 @@ In a landing zone architecture, Azure AI Foundry is deployed with:
 
 Create a solution that:
 
-1. Sets up a prompt flow using the "Chat with Wikipedia" template
-2. Modifies it to use your Azure AI Search index instead
-3. Enhances the flow with:
+1. Sets up an AI assistant using Azure AI Foundry
+2. Connects it to your Azure AI Search index
+3. Enhances the assistant with:
    - Query reformulation
    - Response filtering
    - Citation formatting
-4. Deploys the flow to a managed online endpoint
-5. Creates a simple web application that integrates with the endpoint
+4. Deploys the assistant to a production environment
+5. Creates a simple web application that integrates with the assistant
 
 Document your implementation, including:
-- Prompt flow design
+- Assistant configuration
 - System prompt customizations
 - Deployment configuration
 - Sample queries and responses
@@ -335,7 +301,7 @@ In the next module, you'll learn how to build a complete search-grounded chat ap
 ## Additional Resources
 
 - [Azure AI Foundry documentation](https://learn.microsoft.com/en-us/azure/ai-studio/)
-- [Prompt flow overview](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/flow-overview)
-- [RAG pattern with prompt flow](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/retrieval-augmented-generation)
-- [Deploy prompt flows](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-prompt-flow)
-- [AI Studio - AzureML manage network isolation](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/configure-managed-network)
+- [Create AI Assistants](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/assistants)
+- [RAG pattern with AI Assistants](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/add-data-to-assistant)
+- [Deploy AI solutions](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models)
+- [AI Foundry network isolation](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/configure-managed-network)
