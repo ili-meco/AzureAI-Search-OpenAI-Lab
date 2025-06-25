@@ -47,7 +47,7 @@ Azure AI Foundry is a unified platform for AI development that includes:
    
    c. Configure private endpoints for secure connectivity
    
-   d. Set up DNS configuration as required by your landing zone architecture
+   d. Set up DNS configuration for your network environment
 
 3. Launch the Azure AI Foundry portal:
    - Click **Launch studio** to open the AI Foundry interface
@@ -232,9 +232,9 @@ This application:
 2. Forwards user queries to your prompt flow endpoint
 3. Returns the responses to the frontend
 
-## Step 7: Understanding the Landing Zone Approach
+## Step 7: Security Considerations for Production Deployments
 
-In a landing zone architecture, Azure AI Foundry is deployed with:
+For production deployments of Azure AI Foundry, consider these security best practices:
 
 1. **Network Isolation**:
    - Private endpoints for all connections
@@ -249,27 +249,28 @@ In a landing zone architecture, Azure AI Foundry is deployed with:
    - Data, models, and inference separated
    - Clear boundaries between development and production
 
+> **Note**: For production-ready infrastructure templates, refer to the [Azure OpenAI Landing Zone Accelerator](https://github.com/Azure/azure-openai-landing-zone/tree/main/foundation) which provides comprehensive security patterns.
+
 ### Reference Architecture Diagram
 
 ```
-┌───────────────────────────────────────────────────────────┐
-│                 Application Landing Zone                  │
-│                                                           │
-│  ┌────────────┐     ┌─────────────┐     ┌─────────────┐   │
-│  │            │     │             │     │             │   │
-│  │ Web App    ├────►│ AI Foundry  ├────►│ Azure AI    │   │
-│  │            │     │ Endpoint    │     │ Search      │   │
-│  └────────────┘     └──────┬──────┘     └─────────────┘   │
-│                            │                              │
-│                            ▼                              │
-│                     ┌─────────────┐                       │
-│                     │             │                       │
-│                     │ Azure       │                       │
-│                     │ OpenAI      │                       │
-│                     │             │                       │
-│                     └─────────────┘                       │
-│                                                           │
-└───────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                                                      │
+│  ┌────────────┐     ┌─────────────┐     ┌─────────┐  │
+│  │            │     │             │     │         │  │
+│  │ Web App    ├────►│ AI Foundry  ├────►│ Azure   │  │
+│  │            │     │ Endpoint    │     │ Search  │  │
+│  └────────────┘     └──────┬──────┘     └─────────┘  │
+│                            │                         │
+│                            ▼                         │
+│                     ┌─────────────┐                  │
+│                     │             │                  │
+│                     │ Azure       │                  │
+│                     │ OpenAI      │                  │
+│                     │             │                  │
+│                     └─────────────┘                  │
+│                                                      │
+└──────────────────────────────────────────────────────┘
 ```
 
 ## Lab Exercise: Creating a Search-Enhanced AI Solution

@@ -14,6 +14,7 @@ By the end of this module, you will be able to:
 - Explain the difference between various search types
 - Recognize when to use different search tiers
 - Design a secure search architecture
+- Apply content safety principles to search implementations
 
 ## Azure AI Search Architecture
 
@@ -125,6 +126,40 @@ Monitoring options for Azure AI Search include:
 
 3. **Diagnostic Logs**: Capture operations and errors for troubleshooting
 
+## Content Safety and Filtering
+
+When implementing Azure AI Search with AI-generated content, content safety becomes a critical consideration:
+
+### Content Filtering
+
+1. **Default Filters**: Azure AI services include built-in content filtering capabilities that help detect and filter harmful content
+   
+2. **Custom Safety Filters**: Organizations can create custom safety filters to:
+   - Define organization-specific policies
+   - Control AI-generated content based on specific requirements
+   - Implement custom moderation workflows
+
+### Creating Custom Safety Filters
+
+Custom safety filters in Azure AI Foundry allow you to:
+
+1. **Define Categories**: Control specific categories of potentially harmful content:
+   - Hate speech
+   - Sexual content
+   - Violence
+   - Self-harm
+
+2. **Set Thresholds**: Customize severity levels for each category (low, medium, high)
+
+3. **Apply Filters**: Implement filters at various points:
+   - During prompt processing
+   - On generated responses
+   - Within RAG-based search implementations
+
+4. **Monitor and Refine**: Track filter effectiveness and adjust as needed
+
+Custom safety filters are especially important when combining search results with generative AI responses, ensuring that all retrieved and generated content meets organizational standards.
+
 ## Lab Exercise: Exploring Azure AI Search Concepts
 
 ### Exercise 1: Exploring Azure AI Search Documentation
@@ -135,7 +170,7 @@ Monitoring options for Azure AI Search include:
    - Creating an index
    - Creating an indexer
    - Security configuration
-
+4. Visit the [Content Filtering in Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/content-filtering) documentation to understand how content safety applies to AI-enhanced search
 
 ## Next Steps
 
@@ -147,3 +182,5 @@ In the next module, you'll learn how to provision and configure an Azure AI Sear
 - [Choose a pricing tier for Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-sku-tier)
 - [Security in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-security-overview)
 - [Monitoring Azure AI Search](https://learn.microsoft.com/en-us/azure/search/monitor-azure-cognitive-search)
+- [Content Filtering in Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/content-filtering)
+- [Creating Custom Safety Filters](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/content-filtering#create-and-use-a-custom-content-filter)

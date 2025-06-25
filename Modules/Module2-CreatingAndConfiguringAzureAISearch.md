@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this module, you will learn how to provision and configure a secure Azure AI Search service. You will set up proper authentication, implement network isolation, and configure monitoring - all key elements of a production-ready search service in a landing zone architecture.
+In this module, you will learn how to provision and configure a secure Azure AI Search service. You will set up proper authentication, implement network isolation, and configure monitoring - all key elements of a production-ready search service.
 
 ## Learning Objectives
 
@@ -34,9 +34,9 @@ By the end of this module, you will be able to:
 
 ### Understanding Deployment Considerations
 
-When deploying Azure AI Search in a landing zone architecture, consider:
+When deploying Azure AI Search for production workloads, consider:
 
-- **Resource Organization**: Typically deployed in a workload-specific resource group
+- **Resource Organization**: Deploy in a workload-specific resource group
 - **Region Selection**: Choose regions that support all related services (OpenAI, AI Foundry)
 - **Service Naming**: Follow organization naming conventions for easier management
 - **Tagging**: Apply appropriate tags for cost allocation and management
@@ -149,14 +149,14 @@ For production environments, private endpoints are recommended:
 
 4. Click **Save**
 
-## Step 5: Understanding Search Service Configuration in a Landing Zone
+## Step 5: Understanding Production Search Service Configuration
 
-In a landing zone architecture, Azure AI Search is typically deployed with:
+For production Azure AI Search deployments, consider these key security components:
 
 1. **Network Isolation**:
-   - Placed within a dedicated subnet
    - Connected via private endpoints
    - No public internet access
+   - Restricted to specific virtual networks
 
 2. **Identity Management**:
    - Uses managed identities for authentication
@@ -169,6 +169,8 @@ In a landing zone architecture, Azure AI Search is typically deployed with:
 4. **Monitoring**:
    - Centralized logging
    - Integration with security monitoring
+
+> **Note**: For a complete production architecture, refer to the [Azure OpenAI Landing Zone Accelerator](https://github.com/Azure/azure-openai-landing-zone/tree/main/foundation) which provides reference implementations for securing both Azure AI Search and Azure OpenAI services.
 
 ## Step 6: Importing and Vectorizing Data Directly
 
@@ -230,25 +232,24 @@ To enable vector search capabilities during import:
 - **Guided Configuration**: Step-by-step wizard for proper setup
 - **Integrated AI Enrichment**: Easily add cognitive skills and vector capabilities
 
-### Reference Architecture Diagram
+### Typical Integration Architecture
 
 ```
-┌───────────────────────────────────┐      ┌───────────────────────────┐
-│     Application Landing Zone      │      │    Platform Services      │
-│                                   │      │                           │
-│  ┌───────────┐     ┌───────────┐  │      │  ┌───────────────────┐    │
-│  │           │     │           │  │      │  │                   │    │
-│  │ Web App   ├────►│ Azure AI  │  │      │  │ Azure Monitor     │    │
-│  │           │     │ Search    │  │      │  │                   │    │
-│  └───────────┘     └─────┬─────┘  │      │  └───────────────────┘    │
-│                          │        │      │                           │
-│  ┌───────────┐           │        │      │  ┌───────────────────┐    │
-│  │           │           │        │      │  │                   │    │
-│  │ Azure     ├───────────┘        │      │  │ Key Vault         │    │
-│  │ OpenAI    │                    │      │  │                   │    │
-│  └───────────┘                    │      │  └───────────────────┘    │
-│                                   │      │                           │
-└───────────────────────────────────┘      └───────────────────────────┘
+┌────────────────────────────────────────────────────┐      
+│                                                    │      
+│  ┌───────────┐     ┌───────────┐     ┌─────────┐   │      
+│  │           │     │           │     │         │   │      
+│  │ Web App   ├────►│ Azure AI  ├────►│ Storage │   │      
+│  │           │     │ Search    │     │         │   │         
+│  └───────────┘     └─────┬─────┘     └─────────┘   │      
+│                          │                         │      
+│  ┌───────────┐           │                         │      
+│  │           │           │                         │      
+│  │ Azure     ├───────────┘                         │      
+│  │ OpenAI    │                                     │      
+│  └───────────┘                                     │      
+│                                                    │      
+└────────────────────────────────────────────────────┘
 ```
 
 ## Lab Exercise: Creating a Secure Search Service and Importing Data
@@ -266,7 +267,7 @@ To enable vector search capabilities during import:
    - Your search service URL
    - Resource ID
    - Configuration choices you made
-   - How you would modify this setup for a production landing zone
+   - Additional security features you would add for a production deployment
 
 ### Exercise 2: Import and Vectorize Sample Data
 

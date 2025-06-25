@@ -891,7 +891,7 @@ Document your implementation, including:
 
 ## Next Steps
 
-In the next module, you'll learn how to implement a comprehensive landing zone for your AI search solution that incorporates all security, networking, and governance best practices.
+In the next module, you'll learn about Microsoft's reference architecture for Azure AI Search solutions that incorporates all security, networking, and governance best practices.
 
 ## Additional Resources
 

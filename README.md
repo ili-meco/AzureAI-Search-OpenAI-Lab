@@ -1,6 +1,6 @@
 # Azure AI Search with OpenAI & AI Foundry Lab Guide
 
-This comprehensive lab guide will walk you through setting up and using Azure AI Search with Azure OpenAI, building a secure landing zone, and implementing a production-ready AI solution.
+This comprehensive lab guide will walk you through setting up and using Azure AI Search with Azure OpenAI and implementing a production-ready AI solution with RAG capabilities.
 
 ## Lab Objectives
 
@@ -12,7 +12,7 @@ By completing this lab, you will:
 4. Implement vector search with embeddings
 5. Use Azure AI Foundry to enhance search capabilities
 6. Deploy a chat application using Azure OpenAI with search grounding
-7. Set up a production-ready solution using the landing zone pattern
+7. Learn about Microsoft's reference architecture for production deployment
 
 ## Prerequisites
 
@@ -56,8 +56,8 @@ By completing this lab, you will:
 
 6. **Module 6: Azure AI Foundry Integration**
    - Creating an AI Foundry project
-   - Building search-enhanced prompt flows
-   - Deploying flows to production endpoints
+   - Building search-enhanced AI assistants
+   - Deploying assistants to production endpoints
    - Testing and evaluating search quality
 
 7. **Module 7: Building a Search-Grounded Chat Application**
@@ -66,11 +66,11 @@ By completing this lab, you will:
    - Implementing Retrieval Augmented Generation (RAG)
    - Managing chat context and history
 
-8. **Module 8: Landing Zone Implementation**
-   - Understanding the landing zone pattern
-   - Implementing network isolation and security
-   - Setting up proper RBAC and access control
-   - Monitoring and observability configuration
+8. **Module 8: Azure AI Search Reference Architecture**
+   - Security best practices for production deployments
+   - Using Microsoft's reference architecture
+   - Key considerations for enterprise implementations
+   - Azure OpenAI Landing Zone Accelerator
 
 ## Getting Started
 
@@ -81,21 +81,15 @@ Follow the instructions in each module sequentially. Each module builds on the k
 - **Modules/** - Detailed markdown guides for each module
 - **CodeSamples/** - Python code examples for working with Azure AI Search
   - **SampleData/** - JSON files for demos and exercises
-  - **InfraAsCode/** - Bicep templates for deploying the landing zone
-    - **modules/** - Modular Bicep files for different Azure resources
-  - **PromptFlows/** - Example Azure AI Foundry prompt flow implementations
+  - **PromptFlows/** - Example AI assistant implementations
 
 ## Sample Files Included
 
 - **Schema Definitions** - Example schema.json for index creation
 - **Sample Documents** - Test documents for indexing exercises
 - **Skillset Configuration** - Example skillset definition for enrichment
-- **Prompt Flows** - Complete RAG implementation with Azure AI Search
-- **Infrastructure as Code** - Full landing zone implementation with:
-  - Networking (VNet, Subnets, NSGs)
-  - Azure AI Search (with private endpoints)
-  - Azure OpenAI (with managed identity)
-  - App Service (for hosting web applications)
-  - Security (Key Vault, RBAC assignments)
+- **AI Assistant Examples** - Complete RAG implementation with Azure AI Search
+
+> **Note**: For infrastructure deployment patterns, this lab refers to the [Azure OpenAI Landing Zone Accelerator](https://github.com/Azure/azure-openai-landing-zone/tree/main/foundation) which provides production-ready templates maintained by Microsoft.
 
 Happy learning!
